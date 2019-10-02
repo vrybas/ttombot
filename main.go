@@ -42,8 +42,8 @@ func main() {
 				case "menu":
 					mainMenu := tg.NewReplyKeyboard(
 						tg.NewKeyboardButtonRow(
-							tg.NewKeyboardButton("😆 One"),
-							tg.NewKeyboardButton("🤪 Two"),
+							tg.NewKeyboardButton("One"),
+							tg.NewKeyboardButton("Two"),
 						),
 					)
 
@@ -66,7 +66,7 @@ func main() {
 				)
 
 				reply := tg.NewMessage(update.Message.Chat.ID, update.Message.Text)
-				reply.ReplyMarkup = nil
+				reply.ReplyMarkup = tg.NewRemoveKeyboard(true)
 				bot.Send(reply)
 			}
 		}
