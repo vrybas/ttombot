@@ -3,23 +3,17 @@ package config
 import (
 	"fmt"
 	"log"
-
-	"github.com/spf13/viper"
+	"os"
 )
 
 var (
-	TG_BOTAPI_KEY string
+	TG_BOTAPI_KEY string = readEnv("TTOMBOT_TG_BOTAPI_KEY")
 )
 
-func init() {
-	viper.SetEnvPrefix("TTOMBOT")
-
-	viper.BindEnv("TG_BOTAPI_KEY")
-	if TG_BOTAPI_KEY = viper.GetString("TG_BOTAPI_KEY"); TG_BOTAPI_KEY == "" {
-		log.Fatalln(errorMsg("TG_BOTAPI_KEY is missing"))
+func readEnv(name string) (out string) {
+	if out = os.Getenv(name); out == "" {
+		log.Fatalln(fmt.Sprintf("Configuration error: %s env var is missing", name))
 	}
-}
 
-func errorMsg(in string) string {
-	return fmt.Sprintf("Configuration error: %s\n", in)
+	return
 }
