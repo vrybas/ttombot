@@ -6,12 +6,12 @@ import (
 	"log"
 
 	tg "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/vrybas/ttombot/config"
 )
 
-const tgBotAPIKey = "951904228:AAHCWIjOMKvF5LtocVqwDuNsSw2tF5-ujeo"
-
 func main() {
-	bot, err := tg.NewBotAPI(tgBotAPIKey)
+	log.Println("Connecting to bot...")
+	bot, err := tg.NewBotAPI(config.TG_BOTAPI_KEY)
 	if err != nil {
 		log.Fatalf("Error creating bot: %s\n", err)
 	}
@@ -20,7 +20,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error getting bot info: %s\n", err)
 	}
-	fmt.Printf("%s: Authentication successful!\n", botUser.FirstName)
+	log.Printf("%s: Authentication successful!\n", botUser.FirstName)
 
 	updConfig := tg.UpdateConfig{
 		Offset:  0,
