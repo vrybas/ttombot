@@ -92,7 +92,7 @@ func handleMsg(update tg.Update) {
 // BotFather.
 func connectToBot() *tg.BotAPI {
 	log.Println("Connecting to bot...")
-	bot, err := tg.NewBotAPI(config.TG_BOTAPI_KEY)
+	bot, err := tg.NewBotAPI(config.APIKey)
 	if err != nil {
 		log.Fatalf("Error creating bot: %s\n", err)
 	}

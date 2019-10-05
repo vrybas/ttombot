@@ -7,15 +7,18 @@ import (
 )
 
 var (
-	TG_BOTAPI_KEY string = readEnv("TTOMBOT_TG_BOTAPI_KEY")
+	APIKey string = func(name string) (v string) {
+		if v = os.Getenv(name); v == "" {
+			log.Fatalln(errMsg(name))
+		}
+		return
+	}("TTOMBOT_TG_BOTAPI_KEY")
 )
 
-// readEnv tries to read ENV variable, or fails if variable is not set or has
-// zero length.
-func readEnv(name string) (out string) {
-	if out = os.Getenv(name); out == "" {
-		log.Fatalln(fmt.Sprintf("Configuration error: %s env var is missing", name))
-	}
+func errMsg(varName string) string {
+	return fmt.Sprintf("ERROR: %s env var is missing.", varName)
+}
 
-	return
+func warnMsg(varName string) string {
+	return fmt.Sprintf("WARNING: %s env var is missing.", varName)
 }
