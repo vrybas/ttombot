@@ -40,7 +40,7 @@ func main() {
 }
 
 // handleCmd executes appropriate handler for the message, that is a command
-// (e.g. starts with "/"). If handler doest not exist, the default handler is
+// (e.g. starts with "/"). If handler does not exist, the default handler is
 // used.
 func handleCmd(update tg.Update) {
 	cmdHandlers := map[string]handleCmdFunc{
