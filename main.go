@@ -1,4 +1,4 @@
-// Telegram bot
+// TTomBot is a Telegram bot. Currenlty only works via long-poll connections.
 package main
 
 import (
@@ -38,6 +38,9 @@ func main() {
 	}
 }
 
+// handleCmd executes appropriate handler for the message, that is a command
+// (e.g. starts with "/"). If handler doest not exist, the default handler is
+// used.
 func handleCmd(update tg.Update) {
 	cmdHandlers := map[string]handleCmdFunc{
 		"menu": menuCmdHandler,
@@ -51,12 +54,14 @@ func handleCmd(update tg.Update) {
 	}
 }
 
+// menuCmdHandler handles the "/menu" command.
 func menuCmdHandler(update tg.Update) {
 	reply := tg.NewMessage(update.Message.Chat.ID, "Main Menu")
 	reply.ReplyMarkup = mainMenu
 	bot.Send(reply)
 }
 
+// menuCmdHandler handles the "/help" command.
 func helpCmdHandler(update tg.Update) {
 	tplBuf := bytes.Buffer{}
 	err := tpl.ExecuteTemplate(&tplBuf, "help.tmpl", nil)
@@ -69,12 +74,15 @@ func helpCmdHandler(update tg.Update) {
 	bot.Send(reply)
 }
 
+// defaultCmdHandler handles the command, that doesn't have a handler defined.
 func defaultCmdHandler(update tg.Update) {
 	reply := tg.NewMessage(update.Message.Chat.ID, "no such command")
 	reply.ReplyMarkup = mainMenu
 	bot.Send(reply)
 }
 
+// handleMsg handles a message, that is not a command. It echoes back the
+// original message.
 func handleMsg(update tg.Update) {
 	fmt.Printf(
 		"chatID: %v, from: %s, message: %s\n",
@@ -88,6 +96,8 @@ func handleMsg(update tg.Update) {
 	bot.Send(reply)
 }
 
+// connectToBot establishes a connection to the bot, using API key, given by
+// BotFather.
 func connectToBot() *tg.BotAPI {
 	log.Println("Connecting to bot...")
 	bot, err := tg.NewBotAPI(config.TG_BOTAPI_KEY)
@@ -104,6 +114,8 @@ func connectToBot() *tg.BotAPI {
 	return bot
 }
 
+// getUpdChan initializes & configures Update Channel, that is used for getting
+// updates(messages, commands etc.) from the bot.
 func getUpdChan() tg.UpdatesChannel {
 	updConfig := tg.UpdateConfig{
 		Offset:  0,
@@ -117,6 +129,7 @@ func getUpdChan() tg.UpdatesChannel {
 	return updChan
 }
 
+// buildMainMenu builds the custom keyboard with a list of available commands.
 func buildMainMenu() tg.ReplyKeyboardMarkup {
 	mainMenu = tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
