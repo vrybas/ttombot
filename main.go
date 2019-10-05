@@ -48,8 +48,8 @@ func handleCmd(update tg.Update) {
 		"help": helpCmdHandler,
 	}
 
-	if handler, ok := cmdHandlers[update.Message.Command()]; ok {
-		handler(update)
+	if cmdHandler, ok := cmdHandlers[update.Message.Command()]; ok {
+		cmdHandler(update)
 	} else {
 		defaultCmdHandler(update)
 	}
