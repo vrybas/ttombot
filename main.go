@@ -60,7 +60,7 @@ func menuCmdHandler(update tg.Update) {
 	bot.Send(reply)
 }
 
-// menuCmdHandler handles the "/help" command.
+// helpCmdHandler handles the "/help" command.
 func helpCmdHandler(update tg.Update) {
 	tplBuf := bytes.Buffer{}
 	err := tpl.ExecuteTemplate(&tplBuf, "help.tmpl", nil)
@@ -73,15 +73,14 @@ func helpCmdHandler(update tg.Update) {
 	bot.Send(reply)
 }
 
-// defaultCmdHandler handles the command, that doesn't have a handler defined.
+// defaultCmdHandler handles commands that don't have handlers defined.
 func defaultCmdHandler(update tg.Update) {
 	reply := tg.NewMessage(update.Message.Chat.ID, "no such command")
 	reply.ReplyMarkup = mainMenu
 	bot.Send(reply)
 }
 
-// handleMsg handles a message, that is not a command. It echoes back the
-// original message.
+// handleMsg handles a message that is not a command.
 func handleMsg(update tg.Update) {
 	reply := tg.NewMessage(update.Message.Chat.ID, update.Message.Text)
 	reply.ReplyMarkup = tg.NewRemoveKeyboard(true)
@@ -106,7 +105,7 @@ func connectToBot() *tg.BotAPI {
 	return bot
 }
 
-// getUpdChan initializes & configures Update Channel, that is used for getting
+// getUpdChan initializes & configures Update Channel that is used for getting
 // updates(messages, commands etc.) from the bot.
 func getUpdChan() tg.UpdatesChannel {
 	updConfig := tg.UpdateConfig{
