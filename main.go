@@ -3,7 +3,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"log"
 	"text/template"
 
@@ -84,13 +83,6 @@ func defaultCmdHandler(update tg.Update) {
 // handleMsg handles a message, that is not a command. It echoes back the
 // original message.
 func handleMsg(update tg.Update) {
-	fmt.Printf(
-		"chatID: %v, from: %s, message: %s\n",
-		update.Message.Chat.ID,
-		update.Message.From.String(),
-		update.Message.Text,
-	)
-
 	reply := tg.NewMessage(update.Message.Chat.ID, update.Message.Text)
 	reply.ReplyMarkup = tg.NewRemoveKeyboard(true)
 	bot.Send(reply)
