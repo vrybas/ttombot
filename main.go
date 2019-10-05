@@ -112,7 +112,7 @@ func getUpdChan() tg.UpdatesChannel {
 	updConfig := tg.UpdateConfig{
 		Offset:  0,
 		Limit:   10,
-		Timeout: 60,
+		Timeout: config.PollTimeoutSec,
 	}
 	updChan, err := bot.GetUpdatesChan(updConfig)
 	if err != nil {
