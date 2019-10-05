@@ -12,10 +12,12 @@ import (
 
 type handleCmdFunc func(tg.Update)
 
-var bot *tg.BotAPI
-var updChan tg.UpdatesChannel
-var mainMenu tg.ReplyKeyboardMarkup
-var tpl *template.Template
+var (
+	bot      *tg.BotAPI
+	updChan  tg.UpdatesChannel
+	mainMenu tg.ReplyKeyboardMarkup
+	tpl      *template.Template
+)
 
 func init() {
 	bot = connectToBot()
