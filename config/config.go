@@ -9,31 +9,34 @@ import (
 
 var (
 	// Bot API key, given by BotFather. Required.
-	APIKey string = func(name string) string {
-		s := os.Getenv(name)
+	APIKey string = func() string {
+		envVar := "TTOMBOT_TG_BOTAPI_KEY"
+
+		s := os.Getenv(envVar)
 		if s == "" {
-			log.Fatalln(errMsg(name))
+			log.Fatalln(errMsg(envVar))
 		}
 		return s
-	}("TTOMBOT_TG_BOTAPI_KEY")
+	}()
 
 	// Poll timeout in seconds. Optional. Default: 60 seconds.
-	PollTimeoutSec int = func(name string) int {
+	PollTimeoutSec int = func() int {
+		envVar := "TTOMBOT_POLL_TIMEOUT_SEC"
 		defaultSec := 60
 
-		s := os.Getenv(name)
+		s := os.Getenv(envVar)
 		if s == "" {
-			log.Println(warnMsg(name))
+			log.Println(warnMsg(envVar))
 			return defaultSec
 		}
 
 		nSec, err := strconv.Atoi(s)
 		if err != nil {
-			log.Fatalln(errMsg(name))
+			log.Fatalln(errMsg(envVar))
 		}
 
 		return nSec
-	}("TTOMBOT_POLL_TIMEOUT_SEC")
+	}()
 )
 
 func errMsg(varName string) string {
